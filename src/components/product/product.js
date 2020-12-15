@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import counter from "../../hocs/counter";
 import Plus from "../plus";
 import Minus from "../minus";
@@ -31,6 +32,17 @@ function Product(props) {
 			</div>
 		</div>
 	)
+}
+
+Product.propTypes = {
+	product: PropTypes.shape({
+		name: PropTypes.string.isRequired,
+		ingredients: PropTypes.array.isRequired,
+		price: PropTypes.number.isRequired,
+	}).isRequired,
+	amount: PropTypes.number.isRequired,
+	decrement: PropTypes.func.isRequired,
+	increment: PropTypes.func.isRequired,
 }
 
 export default counter(Product)

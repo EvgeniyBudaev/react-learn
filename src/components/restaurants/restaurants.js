@@ -3,6 +3,7 @@ import Restaurant from '../restaurant';
 import Navigation from '../navigation';
 
 function Restaurants(props) {
+	console.log('props', props)
 	const {restaurants} = props
 	const [activeRestaurantId, setActiveRestaurant] = useState(restaurants[0].id)
 
