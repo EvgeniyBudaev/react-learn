@@ -1,13 +1,20 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import {Provider} from 'react-redux'
 import App from './components/app'
 import './index.css'
-import {restaurants} from "./fixtures";
+import {restaurants} from './fixtures'
+import store from './redux/store'
 import reportWebVitals from './reportWebVitals'
+
+// DEV ONLY!!!
+window.store = store
 
 ReactDOM.render(
 	<React.StrictMode>
-		<App restaurants={restaurants} />
+		<Provider store={store}>
+			<App restaurants={restaurants} />
+		</Provider>
 	</React.StrictMode>,
 	document.getElementById('root')
 )
