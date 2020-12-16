@@ -1,15 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import counter from "../../hocs/counter";
-import Plus from "../plus";
-import Minus from "../minus";
-import styles from './product.module.css';
+import counter from '../../hocs/counter'
+import Plus from '../plus'
+import Minus from '../minus'
+import styles from './product.module.css'
 
 function Product(props) {
 	const {product, amount, decrement, increment} = props
 
 	return (
-		<div className={styles.product}>
+		<div className={styles.product} data-test="product">
 			<div className={styles.content}>
 				<div>
 					<h4 className={styles.title}>{product.name}</h4>
@@ -18,12 +18,22 @@ function Product(props) {
 				</div>
 				<div>
 					<div className={styles.counter}>
-						<div className={styles.count}>{amount}</div>
+						<div className={styles.count} data-test="product-amount">
+							{amount}
+						</div>
 						<div className={styles.buttons}>
-							<button className={styles.button} onClick={decrement}>
+							<button
+								className={styles.button}
+								onClick={decrement}
+								data-test="product-decrement"
+							>
 								<Minus />
 							</button>
-							<button className={styles.button} onClick={increment}>
+							<button
+								className={styles.button}
+								onClick={increment}
+								data-test="product-increment"
+							>
 								<Plus />
 							</button>
 						</div>

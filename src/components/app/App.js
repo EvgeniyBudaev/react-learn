@@ -1,6 +1,7 @@
 import React from 'react'
-import Restaurants from "../restaurants";
-import Header from "../header";
+import PropTypes from 'prop-types'
+import Restaurants from '../restaurants'
+import Header from '../header'
 
 function App(props) {
 	return (
@@ -9,6 +10,10 @@ function App(props) {
 			<Restaurants restaurants={props.restaurants} />
 		</div>
 	)
+}
+
+App.propTypes = {
+	restaurants: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
 export default App
