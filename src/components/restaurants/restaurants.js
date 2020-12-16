@@ -1,14 +1,15 @@
 import React, {useMemo, useState} from 'react'
-import Restaurant from '../restaurant';
-import Navigation from '../navigation';
+import PropTypes from 'prop-types'
+import Restaurant from '../restaurant'
+import Navigation from '../navigation'
 
 function Restaurants(props) {
-	console.log('props', props)
 	const {restaurants} = props
 	const [activeRestaurantId, setActiveRestaurant] = useState(restaurants[0].id)
 
 	const activeRestaurant = useMemo(
-		() => restaurants.find(restaurant => restaurant.id === activeRestaurantId),
+		() =>
+			restaurants.find((restaurant) => restaurant.id === activeRestaurantId),
 		[activeRestaurantId, restaurants]
 	)
 
@@ -21,6 +22,14 @@ function Restaurants(props) {
 			<Restaurant restaurant={activeRestaurant} />
 		</div>
 	)
+}
+
+Restaurants.propTypes = {
+	restaurants: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.string.isRequired,
+		}).isRequired
+	).isRequired,
 }
 
 export default Restaurants

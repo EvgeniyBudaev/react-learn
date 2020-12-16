@@ -1,10 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Product from '../product'
 
-import styles from './menu.module.css';
+import styles from './menu.module.css'
 
 function Menu(props) {
-	const { menu } = props;
+	const {menu} = props
 
 	return (
 		<div className={styles.menu}>
@@ -15,6 +16,14 @@ function Menu(props) {
 			</div>
 		</div>
 	)
+}
+
+Menu.propTypes = {
+	menu: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.string.isRequired,
+		}).isRequired
+	).isRequired,
 }
 
 export default Menu
