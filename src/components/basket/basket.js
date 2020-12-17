@@ -39,7 +39,6 @@ function Basket({title = 'Basket', total, orderProducts}) {
 
 export default connect((state) => {
 	const allProducts = state.restaurants.flatMap((restaurant) => restaurant.menu)
-
 	const orderProducts = Object.keys(state.order)
 		.filter((productId) => state.order[productId] > 0)
 		.map((productId) => allProducts.find((product) => product.id === productId))
