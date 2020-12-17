@@ -2,8 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Restaurant from '../restaurant'
 import Tabs from '../tabs'
+import {connect} from 'react-redux'
 
 function Restaurants(props) {
+	console.log('props', props)
 	const {restaurants} = props
 	const tabs = restaurants.map((restaurant) => ({
 		title: restaurant.name,
@@ -22,4 +24,8 @@ Restaurants.propTypes = {
 	).isRequired,
 }
 
-export default Restaurants
+const mapStateToProps = (state) => ({
+	restaurants: state.restaurants,
+})
+
+export default connect(mapStateToProps)(Restaurants)
