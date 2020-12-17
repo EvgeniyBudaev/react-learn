@@ -2,10 +2,9 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 // import counter from '../../hocs/counter'
-import Plus from '../plus'
-import Minus from '../minus'
 import styles from './product.module.css'
 import {decrement, increment} from '../../redux/actionCreators/actions'
+import Button from '../UI/button'
 
 function Product(props) {
 	const {product, amount, decrement, increment} = props
@@ -25,20 +24,8 @@ function Product(props) {
 							{amount}
 						</div>
 						<div className={styles.buttons}>
-							<button
-								className={styles.button}
-								onClick={() => decrement(id)}
-								data-test="product-decrement"
-							>
-								<Minus />
-							</button>
-							<button
-								className={styles.button}
-								onClick={() => increment(id)}
-								data-test="product-increment"
-							>
-								<Plus />
-							</button>
+							<Button onClick={decrement} icon="minus" />
+							<Button onClick={increment} icon="plus" />
 						</div>
 					</div>
 				</div>
@@ -62,15 +49,15 @@ const mapStateToProps = (state, ownProps) => ({
 	amount: state.order[ownProps.product.id] || 0,
 })
 
-const mapDispatchToProps = {
-	decrement,
-	increment,
-}
+// const mapDispatchToProps = {
+// 	decrement,
+// 	increment,
+// }
 
-// const mapDispatchToProps = (dispatch, ownProps) => ({
-// 	decrement: () => dispatch(decrement(ownProps.product.id)),
-// 	increment: () => dispatch(increment(ownProps.product.id))
-// })
+const mapDispatchToProps = (dispatch, ownProps) => ({
+	decrement: () => dispatch(decrement(ownProps.product.id)),
+	increment: () => dispatch(increment(ownProps.product.id)),
+})
 // и тогда можно сделать <button onClick={decrement}>
 
 export default connect(mapStateToProps, mapDispatchToProps)(Product)
