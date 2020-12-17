@@ -5,7 +5,6 @@ import Tabs from '../tabs'
 import {connect} from 'react-redux'
 
 function Restaurants(props) {
-	console.log('props', props)
 	const {restaurants} = props
 	const tabs = restaurants.map((restaurant) => ({
 		title: restaurant.name,
