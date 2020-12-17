@@ -1,33 +1,23 @@
-import React, {useMemo, useState} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import Restaurant from '../restaurant'
-import Navigation from '../navigation'
+import Tabs from '../tabs'
 
 function Restaurants(props) {
 	const {restaurants} = props
-	const [activeRestaurantId, setActiveRestaurant] = useState(restaurants[0].id)
+	const tabs = restaurants.map((restaurant) => ({
+		title: restaurant.name,
+		content: <Restaurant restaurant={restaurant} />,
+	}))
 
-	const activeRestaurant = useMemo(
-		() =>
-			restaurants.find((restaurant) => restaurant.id === activeRestaurantId),
-		[activeRestaurantId, restaurants]
-	)
-
-	return (
-		<div>
-			<Navigation
-				handleRestaurantClick={setActiveRestaurant}
-				restaurants={restaurants}
-			/>
-			<Restaurant restaurant={activeRestaurant} />
-		</div>
-	)
+	return <Tabs tabs={tabs} />
 }
 
 Restaurants.propTypes = {
 	restaurants: PropTypes.arrayOf(
 		PropTypes.shape({
-			id: PropTypes.string.isRequired,
+			name: PropTypes.string.isRequired,
+			restaurant: PropTypes.object,
 		}).isRequired
 	).isRequired,
 }
