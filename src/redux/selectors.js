@@ -1,5 +1,7 @@
 import {createSelector} from 'reselect'
+import { getById } from './utils';
 
+const restaurantsSelector = (state) => state.restaurants
 const orderSelector = (state) => state.order
 const productsSelector = (state) => state.products
 
@@ -16,7 +18,38 @@ export const orderProductsSelector = createSelector(
 				subtotal: order[product.id] * product.price,
 			}))
 	}
-)
+);
+
+const reviewsSelector = (state) => state.reviews;
+const usersSelector = (state) => state.users;
+
+export const restaurantsListSelector = createSelector(
+	restaurantsSelector,
+	Object.values
+);
+export const productAmountSelector = getById(orderSelector, 0);
+export const productSelector = getById(productsSelector);
+const reviewSelector = getById(reviewsSelector);
+
+export const reviewWitUserSelector = createSelector(
+	reviewSelector,
+	usersSelector,
+	(review, users) => ({
+		...review,
+		user: users[review.userId]?.name,
+	})
+);
+
+export const averageRatingSelector = createSelector(
+	reviewsSelector,
+	(_, { reviews }) => reviews,
+	(reviews, ids) => {
+		const ratings = ids.map((id) => reviews[id].rating);
+		return Math.round(
+			ratings.reduce((acc, rating) => acc + rating) / ratings.length
+		);
+	}
+);
 
 export const totalSelector = createSelector(
 	orderProductsSelector,

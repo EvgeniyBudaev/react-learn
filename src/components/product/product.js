@@ -1,9 +1,11 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import { createStructuredSelector } from 'reselect'
 import PropTypes from 'prop-types'
 // import counter from '../../hocs/counter'
 import styles from './product.module.css'
 import {decrement, increment} from '../../redux/actionCreators/actions'
+import { productAmountSelector, productSelector } from '../../redux/selectors'
 import Button from '../UI/button'
 
 function Product(props) {
@@ -46,10 +48,10 @@ Product.propTypes = {
 	increment: PropTypes.func.isRequired,
 }
 
-const mapStateToProps = (state, ownProps) => ({
-	amount: state.order[ownProps.id] || 0,
-	product: state.products[ownProps.id],
-})
+const mapStateToProps = createStructuredSelector({
+	amount: productAmountSelector,
+	product: productSelector,
+});
 
 // const mapDispatchToProps = {
 // 	decrement,

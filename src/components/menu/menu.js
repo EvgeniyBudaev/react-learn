@@ -23,11 +23,7 @@ function Menu(props) {
 }
 
 Menu.propTypes = {
-	menu: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.string.isRequired,
-		}).isRequired
-	).isRequired,
+	menu: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
 }
 
 export default Menu
