@@ -7,6 +7,7 @@
 		"@testing-library/react": "^11.1.0",
 		"@testing-library/user-event": "^12.1.10",
 		"classnames": "^2.2.6",
+		"lint-staged": "^10.5.3",
 		"node-sass": "^4.8.3",
 		"normalize.css": "^8.0.1",
 		"prop-types": "^15.7.2",
@@ -23,8 +24,7 @@
 		"start": "react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
-		"eject": "react-scripts eject",
-		"format-staged": "pretty-quick --staged"
+		"eject": "react-scripts eject"
 	},
 	"eslintConfig": {
 		"extends": [
@@ -50,10 +50,5 @@
 		"husky": "^4.3.6",
 		"prettier": "2.2.1",
 		"pretty-quick": "^3.1.0"
-	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "npx pretty-quick --staged"
-		}
 	}
 }
