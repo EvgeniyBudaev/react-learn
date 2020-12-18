@@ -23,7 +23,8 @@
 		"start": "react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
-		"eject": "react-scripts eject"
+		"eject": "react-scripts eject",
+		"format-staged": "pretty-quick --staged"
 	},
 	"eslintConfig": {
 		"extends": [
@@ -52,7 +53,7 @@
 	},
 	"husky": {
 		"hooks": {
-			"pre-commit": "pretty-quick --staged"
+			"pre-commit": "npx pretty-quick --staged"
 		}
 	}
 }
