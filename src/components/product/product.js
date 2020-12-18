@@ -7,8 +7,9 @@ import {decrement, increment} from '../../redux/actionCreators/actions'
 import Button from '../UI/button'
 
 function Product(props) {
+	console.log('props', props)
 	const {product, amount, decrement, increment} = props
-	const {id, name, ingredients, price} = product
+	const {name, ingredients, price} = product
 
 	return (
 		<div className={styles.product} data-test="product">
@@ -40,13 +41,15 @@ Product.propTypes = {
 		ingredients: PropTypes.array.isRequired,
 		price: PropTypes.number.isRequired,
 	}).isRequired,
+	// from HOC counter
 	amount: PropTypes.number,
 	decrement: PropTypes.func.isRequired,
 	increment: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state, ownProps) => ({
-	amount: state.order[ownProps.product.id] || 0,
+	amount: state.order[ownProps.id] || 0,
+	product: state.products[ownProps.id],
 })
 
 // const mapDispatchToProps = {
@@ -55,8 +58,8 @@ const mapStateToProps = (state, ownProps) => ({
 // }
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-	decrement: () => dispatch(decrement(ownProps.product.id)),
-	increment: () => dispatch(increment(ownProps.product.id)),
+	decrement: () => dispatch(decrement(ownProps.id)),
+	increment: () => dispatch(increment(ownProps.id)),
 })
 // и тогда можно сделать <button onClick={decrement}>
 

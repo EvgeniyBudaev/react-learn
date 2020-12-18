@@ -1,6 +1,6 @@
-import {restaurants as defaultRestaurants} from '../../fixtures'
+import {normalizedRestaurants as defaultRestaurants} from '../../fixtures'
 
-const reducer = (restaurants = defaultRestaurants, action) => {
+const restaurantsReducer = (restaurants = defaultRestaurants, action) => {
 	const {type} = action
 
 	switch (type) {
@@ -9,4 +9,4 @@ const reducer = (restaurants = defaultRestaurants, action) => {
 	}
 }
 
-export default reducer
+export default restaurantsReducer
