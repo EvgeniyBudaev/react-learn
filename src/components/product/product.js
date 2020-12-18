@@ -7,7 +7,6 @@ import {decrement, increment} from '../../redux/actionCreators/actions'
 import Button from '../UI/button'
 
 function Product(props) {
-	console.log('props', props)
 	const {product, amount, decrement, increment} = props
 	const {name, ingredients, price} = product
 
