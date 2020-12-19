@@ -6,7 +6,7 @@ import Reviews from '../reviews'
 import Banner from '../banner'
 import Rate from '../rate'
 import Tabs from '../tabs'
-import { averageRatingSelector } from '../../redux/selectors'
+import {averageRatingSelector} from '../../redux/selectors'
 
 const Restaurant = (props) => {
 	const {id, name, menu, reviews, averageRating} = props
@@ -38,5 +38,5 @@ Restaurant.propTypes = {
 }
 
 export default connect((state, props) => ({
-	averageRating: averageRatingSelector(state, props),
+	averageRating: averageRatingSelector(state, props)
 }))(Restaurant);

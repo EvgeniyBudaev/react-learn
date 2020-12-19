@@ -3,18 +3,18 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import Restaurant from '../restaurant'
 import Tabs from '../tabs'
-import { restaurantsListSelector } from '../../redux/selectors'
+import {restaurantsListSelector, restaurantsLoadedSelector, restaurantsLoadingSelector} from '../../redux/selectors'
 import {loadRestaurants} from '../../redux/actionCreators/actions'
 import Loader from '../loader'
 
 function Restaurants(props) {
-	const {restaurants, loadRestaurants} = props
+	const {restaurants, loadRestaurants, loading, loaded} = props
 
 	useEffect(() => {
-		loadRestaurants()
+		if (!loading && !loaded) loadRestaurants()
 	}, []) // eslint-disable-line
 
-	if (restaurants.length === 0) return <Loader />;
+	if (loading || !loaded) return <Loader />;
 
 	const tabs = restaurants.map((restaurant) => ({
 		title: restaurant.name,
@@ -35,6 +35,8 @@ Restaurants.propTypes = {
 
 const mapStateToProps = (state) => ({
 	restaurants: restaurantsListSelector(state),
+	loading: restaurantsLoadingSelector(state),
+	loaded: restaurantsLoadedSelector(state),
 })
 
 const mapDispatchToProps = ({
