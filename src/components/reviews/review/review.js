@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { connect } from 'react-redux'
 
 import Rate from '../../rate'
 import styles from './review.module.css'
@@ -39,6 +40,8 @@ Review.propTypes = {
 // 	user: 'Anonymous',
 // }
 
-export default connect((state, props) => ({
-	review: reviewWitUserSelector(state, props),
-}))(Review);
+export default connect(
+	createStructuredSelector({
+		review: reviewWitUserSelector,
+	})
+)(Review);

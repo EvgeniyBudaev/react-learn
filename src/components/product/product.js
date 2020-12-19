@@ -8,17 +8,16 @@ import {decrement, increment} from '../../redux/actionCreators/actions'
 import { productAmountSelector, productSelector } from '../../redux/selectors'
 import Button from '../UI/button'
 
-function Product(props) {
-	const {product, amount, decrement, increment} = props
-	const {name, ingredients, price} = product
+const Product = ({ product, amount = 0, increment, decrement }) => {
+	if (!product) return null;
 
 	return (
 		<div className={styles.product} data-test="product">
 			<div className={styles.content}>
 				<div>
-					<h4 className={styles.title}>{name}</h4>
-					<p className={styles.description}>{ingredients.join(', ')}</p>
-					<div className={styles.price}>{price} $</div>
+					<h4 className={styles.title}>{product.name}</h4>
+					<p className={styles.description}>{product.ingredients.join(', ')}</p>
+					<div className={styles.price}>{product.price} $</div>
 				</div>
 				<div>
 					<div className={styles.counter}>
@@ -41,7 +40,7 @@ Product.propTypes = {
 		name: PropTypes.string.isRequired,
 		ingredients: PropTypes.array.isRequired,
 		price: PropTypes.number.isRequired,
-	}).isRequired,
+	}),
 	// from HOC counter
 	amount: PropTypes.number,
 	decrement: PropTypes.func.isRequired,

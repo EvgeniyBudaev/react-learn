@@ -9,7 +9,7 @@ const Rate = (props) => {
 	return (
 		<div>
 			{[...Array(5)].map((_, i) => (
-				<Star key={i} checked={i <= value - 1} onClick={() => onChange(i + 1)} />
+				<Star key={i} checked={i <= value - 1} onClick={() => onChange && onChange(i + 1)} />
 			))}
 		</div>
 	)
