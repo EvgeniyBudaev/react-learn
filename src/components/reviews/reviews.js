@@ -1,11 +1,17 @@
-import React from 'react'
+import React, {useEffect} from 'react'
+import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import Review from './review'
 import styles from './reviews.module.css'
 import ReviewForm from './review-form'
+import {loadReviews} from '../../redux/actionCreators/actions'
 
 const Reviews = (props) => {
-	const {reviews, restaurantId} = props
+	const {reviews, restaurantId, loadReviews} = props
+
+	useEffect(() => {
+		loadReviews(restaurantId)
+	}, [loadReviews, restaurantId])
 
 	return (
 		<div className={styles.reviews}>
@@ -22,4 +28,4 @@ Reviews.propTypes = {
 	reviews: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
 }
 
-export default Reviews
+export default connect(null, {loadReviews})(Reviews)
