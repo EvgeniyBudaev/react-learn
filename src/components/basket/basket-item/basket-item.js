@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import { Link } from 'react-router-dom'
 import cn from 'classnames'
 import {
 	increment,
@@ -9,11 +10,13 @@ import {
 import Button from '../../UI/button'
 import styles from './basket-item.module.css'
 
-function BasketItem({product, amount, subtotal, increment, decrement, remove}) {
+function BasketItem({product, amount, subtotal, restaurantId, increment, decrement, remove}) {
 	return (
 		<div className={styles.basketItem}>
 			<div className={styles.name}>
-				<span>{product.name}</span>
+				<Link to={`/restaurants/${restaurantId}/menu`}>
+					<span>{product.name}</span>
+				</Link>
 			</div>
 			<div className={styles.info}>
 				<div className={styles.counter}>

@@ -10,7 +10,6 @@ function App() {
 		<div className="App">
 			<Header />
 			<Switch>
-				<Route path="/" component={() => 'Main Page'} exact />
 				<Route path="/checkout" component={Basket} />
 				<Route path="/restaurants" component={RestaurantsPage} />
 				<Route path="/" component={() => '404 - Not found'} />
