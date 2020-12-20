@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {Provider} from 'react-redux'
+import {BrowserRouter} from 'react-router-dom'
 import App from './components/app'
 import './index.css'
 import {restaurants} from './fixtures'
@@ -12,9 +13,11 @@ window.store = store
 
 ReactDOM.render(
 	<React.StrictMode>
-		<Provider store={store}>
-			<App restaurants={restaurants} />
-		</Provider>
+		<BrowserRouter>
+			<Provider store={store}>
+				<App restaurants={restaurants} />
+			</Provider>
+		</BrowserRouter>
 	</React.StrictMode>,
 	document.getElementById('root')
 )
