@@ -1,16 +1,20 @@
 import React from 'react'
-import {Route} from 'react-router-dom'
-import Restaurants from '../restaurants'
+import {Switch, Route} from 'react-router-dom'
 import Header from '../header'
 import Basket from '../basket'
+import RestaurantsPage from '../../pages/restaurants-page'
 
 
 function App() {
 	return (
 		<div className="App">
 			<Header />
-			<Route path="/checkout" component={Basket} />
-			<Route path="/restaurants/:restId" component={Restaurants } />
+			<Switch>
+				<Route path="/" component={() => 'Main Page'} exact />
+				<Route path="/checkout" component={Basket} />
+				<Route path="/restaurants" component={RestaurantsPage} />
+				<Route path="/" component={() => '404 - Not found'} />
+			</Switch>
 		</div>
 	)
 }

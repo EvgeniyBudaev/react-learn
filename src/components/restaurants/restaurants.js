@@ -1,23 +1,15 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import {connect} from 'react-redux'
 import {NavLink} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { createStructuredSelector } from 'reselect'
 import Restaurant from '../restaurant'
-import {restaurantsListSelector, restaurantsLoadedSelector, restaurantsLoadingSelector} from '../../redux/selectors'
-import {loadRestaurants} from '../../redux/actionCreators/actions'
-import Loader from '../loader'
+import {restaurantsListSelector} from '../../redux/selectors'
 import styles from './restaurants.module.css'
+import {loadRestaurants} from '../../redux/actionCreators/actions'
 
 function Restaurants(props) {
-	const {restaurants, loadRestaurants, loading, loaded, match} = props
-
-	useEffect(() => {
-		if (!loading && !loaded) loadRestaurants()
-	}, []) // eslint-disable-line
-
-
-	if (loading || !loaded) return <Loader />;
+	const {restaurants, match} = props
 
 	const {restId} = match.params
 
@@ -58,7 +50,6 @@ Restaurants.propTypes = {
 
 export default connect(  createStructuredSelector({
 		restaurants: restaurantsListSelector,
-		loading: restaurantsLoadingSelector,
-		loaded: restaurantsLoadedSelector,
 	}),
-	{ loadRestaurants })(Restaurants)
+	{loadRestaurants}
+	)(Restaurants)
