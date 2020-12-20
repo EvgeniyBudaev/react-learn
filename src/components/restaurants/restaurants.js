@@ -1,28 +1,49 @@
 import React, {useEffect} from 'react'
 import {connect} from 'react-redux'
+import {NavLink} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { createStructuredSelector } from 'reselect'
 import Restaurant from '../restaurant'
-import Tabs from '../tabs'
 import {restaurantsListSelector, restaurantsLoadedSelector, restaurantsLoadingSelector} from '../../redux/selectors'
 import {loadRestaurants} from '../../redux/actionCreators/actions'
 import Loader from '../loader'
+import styles from './restaurants.module.css'
 
 function Restaurants(props) {
-	const {restaurants, loadRestaurants, loading, loaded} = props
+	const {restaurants, loadRestaurants, loading, loaded, match} = props
 
 	useEffect(() => {
 		if (!loading && !loaded) loadRestaurants()
 	}, []) // eslint-disable-line
 
+
 	if (loading || !loaded) return <Loader />;
 
-	const tabs = restaurants.map((restaurant) => ({
-		title: restaurant.name,
-		content: <Restaurant {...restaurant} />,
-	}))
+	const {restId} = match.params
 
-	return <Tabs tabs={tabs} />
+	const restaurant = restaurants.find(restaurant => restaurant.id === restId)
+
+
+
+	return (
+		<>
+			<div className={styles.tabs}>
+				{restaurants.map(({id, name}) => (
+					<NavLink
+						key={id}
+						to={`/restaurants/${id}`}
+						className={styles.tab}
+						// activeStyle={{color: 'red'}}
+						activeClassName={styles.active}
+					>
+						{name}
+					</NavLink>
+				))}
+			</div>
+			<Restaurant {...restaurant} />
+		</>
+	)
+
 }
 
 Restaurants.propTypes = {

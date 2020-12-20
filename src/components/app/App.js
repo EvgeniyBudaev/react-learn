@@ -10,7 +10,7 @@ function App() {
 		<div className="App">
 			<Header />
 			<Route path="/checkout" component={Basket} />
-			<Route path="/restaurants" component={Restaurants } />
+			<Route path="/restaurants/:restId" component={Restaurants } />
 		</div>
 	)
 }
