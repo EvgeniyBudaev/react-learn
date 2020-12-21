@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import {Route} from 'react-router-dom'
+import {Route, Redirect} from 'react-router-dom'
 import Restaurants from '../components/restaurants/restaurants'
 import Loader from '../components/loader'
 import {loadRestaurants} from '../redux/actionCreators/actions'
@@ -9,7 +9,13 @@ import {restaurantsListSelector, restaurantsLoadedSelector, restaurantsLoadingSe
 
 
 function RestaurantsPage(props) {
-	const {loadRestaurants, loading, loaded, match} = props
+	const {
+		restaurants,
+		loadRestaurants,
+		loading,
+		loaded,
+		match,
+	} = props
 
 	useEffect(() => {
 		if (!loading && !loaded) loadRestaurants()
@@ -17,12 +23,7 @@ function RestaurantsPage(props) {
 
 	if (loading || !loaded) return <Loader />;
 	if (match.isExact) {
-		return (
-			<>
-				<Restaurants match={match} />
-				<h2 style={{ textAlign: 'center' }}>Select restaurant</h2>
-			</>
-		)
+		return <Redirect to={`/restaurants/${restaurants[0].id}`} />;
 	}
 
 	return <Route path="/restaurants/:restId" component={Restaurants} />;
