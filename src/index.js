@@ -2,22 +2,23 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {Provider} from 'react-redux'
 import {BrowserRouter} from 'react-router-dom'
+import {ConnectedRouter} from 'connected-react-router'
 import App from './components/app'
 import './index.css'
-import {restaurants} from './fixtures'
 import store from './redux/store'
 import reportWebVitals from './reportWebVitals'
+import history from './history'
 
 // DEV ONLY!!!
 window.store = store
 
 ReactDOM.render(
 	<React.StrictMode>
-		<BrowserRouter>
 			<Provider store={store}>
-				<App restaurants={restaurants} />
+				<ConnectedRouter history={history}>
+				<App />
+				</ConnectedRouter>
 			</Provider>
-		</BrowserRouter>
 	</React.StrictMode>,
 	document.getElementById('root')
 )

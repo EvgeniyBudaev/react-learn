@@ -33,7 +33,11 @@ const Restaurant = (props) => {
 					path="/restaurants/:restId/reviews"
 					render={() => <Reviews reviews={reviews} restaurantId={id} />}
 				/>
-				<Redirect from="/restaurants/:restId" to={`/restaurants/${id}/menu`} exact />
+				<Redirect
+					exact
+					from="/restaurants/:restId"
+					to={`/restaurants/${id}/menu`}
+				/>
 			</Switch>
 		</div>
 	)
