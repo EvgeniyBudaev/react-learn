@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import {connect} from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import {Link} from 'react-router-dom'
@@ -8,8 +8,11 @@ import BasketRow from './basket-row'
 import BasketItem from './basket-item'
 import Button from '../UI/button'
 import {orderProductsSelector, totalSelector} from '../../redux/selectors'
+import userContext, {UserConsumer} from '../../contexts/user-context'
 
 function Basket({title = 'Basket', total, orderProducts}) {
+	// const {name} = useContext(userContext)
+
 	if (!total) {
 		return (
 			<div className={styles.basket}>
@@ -20,7 +23,12 @@ function Basket({title = 'Basket', total, orderProducts}) {
 
 	return (
 		<div className={styles.basket}>
-			<h4 className={styles.title}>{title}</h4>
+			{/*<h4 className={styles.title}>{`${name}'s ${title}`}</h4>*/}
+			<h4 className={styles.title}>
+				<UserConsumer>
+					{({name}) => `${name}'s ${title}`}
+				</UserConsumer>
+			</h4>
 			{orderProducts.map(({ product, amount, subtotal, restaurantId }) => (
 				<BasketItem
 					product={product}
