@@ -1,0 +1,17 @@
+.basket-animation-enter {
+    opacity: 0;
+    transform: scale(0.9);
+}
+.basket-animation-active {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 5000ms, transform 5000ms;
+}
+.basket-animation-exit {
+    opacity: 1;
+}
+.basket-animation-exit-active {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 5000ms, transform 5000ms;
+}
