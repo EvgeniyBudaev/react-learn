@@ -1,8 +1,8 @@
 import React from 'react'
-import Enzyme, {mount} from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-Enzyme.configure({adapter: new Adapter()})
+import {mount} from 'enzyme'
+
 import Product from './product'
+
 import {restaurants} from '../../fixtures'
 
 const product = restaurants[0].menu[0]
@@ -10,7 +10,7 @@ const product = restaurants[0].menu[0]
 describe('Product', () => {
 	let wrapper
 
-	const getByDataId = (dataId) => wrapper.find(`[data-test="${dataId}"]`)
+	const getByDataId = (dataId) => wrapper.find(`[data-id="${dataId}"]`)
 	const getProducts = () => getByDataId('product')
 	const getAmount = () => getByDataId('product-amount').text()
 	const increase = () => getByDataId('product-increment').simulate('click')
@@ -47,5 +47,11 @@ describe('Product', () => {
 		wrapper = mount(<Product product={product} />)
 		decrease()
 		expect(getAmount()).toBe('0')
+	})
+
+	it('should fetch data on mount', () => {
+		const fn = jest.fn()
+		mount(<Product product={product} fetchData={fn} />)
+		expect(fn).toBeCalledWith(product.id)
 	})
 })

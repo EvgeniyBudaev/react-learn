@@ -1,16 +1,22 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import cn from 'classnames'
-import {
+import {increment, decrement, remove} from '../../../redux/actions'
+import Button from '../../button'
+import styles from './basket-item.module.css'
+import {useMoney} from '../../../hooks/use-money'
+
+function BasketItem({
+	product,
+	amount,
+	subtotal,
+	restaurantId,
 	increment,
 	decrement,
 	remove,
-} from '../../../redux/actionCreators/actions'
-import Button from '../../UI/button'
-import styles from './basket-item.module.css'
-
-function BasketItem({product, amount, subtotal, restaurantId, increment, decrement, remove}) {
+}) {
+	const m = useMoney()
 	return (
 		<div className={styles.basketItem}>
 			<div className={styles.name}>
@@ -34,7 +40,7 @@ function BasketItem({product, amount, subtotal, restaurantId, increment, decreme
 						small
 					/>
 				</div>
-				<p className={cn(styles.count, styles.price)}>{subtotal} $</p>
+				<p className={cn(styles.count, styles.price)}>{m(subtotal)}</p>
 				<Button
 					onClick={() => remove(product.id)}
 					icon="delete"

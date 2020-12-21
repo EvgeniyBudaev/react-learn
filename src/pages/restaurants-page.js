@@ -1,36 +1,42 @@
 import React, {useEffect} from 'react'
-import {Route} from 'react-router-dom'
-import Restaurants from '../components/restaurants/restaurants'
-import Loader from '../components/loader'
-import {loadRestaurants} from '../redux/actionCreators/actions'
+import {Route, Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
-import {restaurantsListSelector, restaurantsLoadedSelector, restaurantsLoadingSelector} from '../redux/selectors'
+import Restaurants from '../components/restaurants'
+import Loader from '../components/loader'
+import {
+	restaurantsListSelector,
+	restaurantsLoadedSelector,
+	restaurantsLoadingSelector,
+} from '../redux/selectors'
 
+import {loadRestaurants} from '../redux/actions'
 
-function RestaurantsPage(props) {
-	const {loadRestaurants, loading, loaded, match} = props
-
+function RestaurantsPage({
+	restaurants,
+	loadRestaurants,
+	loading,
+	loaded,
+	match,
+}) {
 	useEffect(() => {
 		if (!loading && !loaded) loadRestaurants()
 	}, []) // eslint-disable-line
 
-	if (loading || !loaded) return <Loader />;
+	if (loading || !loaded) return <Loader />
+
 	if (match.isExact) {
-		return (
-			<>
-				<Restaurants match={match} />
-				<h2 style={{ textAlign: 'center' }}>Select restaurant</h2>
-			</>
-		)
+		return <Redirect to={`/restaurants/${restaurants[0].id}`} />
 	}
 
-	return <Route path="/restaurants/:restId" component={Restaurants} />;
+	return <Route path="/restaurants/:restId" component={Restaurants} />
 }
 
-export default connect(  createStructuredSelector({
+export default connect(
+	createStructuredSelector({
 		restaurants: restaurantsListSelector,
 		loading: restaurantsLoadingSelector,
 		loaded: restaurantsLoadedSelector,
 	}),
-	{ loadRestaurants })(RestaurantsPage)
+	{loadRestaurants}
+)(RestaurantsPage)

@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import {useState} from 'react'
 
 const useForm = (initialValues = {}) => {
-	const [values, setValues] = useState(initialValues);
+	const [values, setValues] = useState(initialValues)
 
-	const setValue = (key, value) => setValues({ ...values, [key]: value });
+	const setValue = (key, value) => setValues({...values, [key]: value})
 
 	const onChange = (key) => (ev) =>
-		setValue(key, ev.target ? ev.target.value : ev);
+		setValue(key, ev.target ? ev.target.value : ev)
 
 	return {
 		values,
@@ -14,11 +14,11 @@ const useForm = (initialValues = {}) => {
 		handlers: Object.keys(values).reduce(
 			(acc, key) => ({
 				...acc,
-				[key]: { value: values[key], onChange: onChange(key) },
+				[key]: {value: values[key], onChange: onChange(key)},
 			}),
 			{}
 		),
-	};
-};
+	}
+}
 
-export default useForm;
+export default useForm

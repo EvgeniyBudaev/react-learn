@@ -70,7 +70,7 @@ const normalizedRestaurants = [
 			'381b0c31-6360-43ff-80d1-581a116159d8',
 		],
 	},
-];
+]
 
 const normalizedProducts = [
 	{
@@ -133,7 +133,7 @@ const normalizedProducts = [
 		price: 10,
 		ingredients: ['bread', 'beef'],
 	},
-];
+]
 
 const normalizedReviews = [
 	{
@@ -185,7 +185,7 @@ const normalizedReviews = [
 		text: 'Meat here is extremely delicious',
 		rating: 5,
 	},
-];
+]
 
 const normalizedUsers = [
 	{
@@ -212,11 +212,11 @@ const normalizedUsers = [
 		id: 'dfb982e9-b432-4b7d-aec6-7f6ff2e6af54',
 		name: 'Sam',
 	},
-];
+]
 
 module.exports = {
 	products: normalizedProducts,
 	restaurants: normalizedRestaurants,
 	reviews: normalizedReviews,
 	users: normalizedUsers,
-};
+}

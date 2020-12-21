@@ -1,10 +1,8 @@
 .star {
-  fill: var(--grey);
-  cursor: pointer;
+	fill: var(--grey);
+	cursor: pointer;
 }
 
 .checked {
-  fill: var(--yellow);
+	fill: var(--yellow);
 }
-
-

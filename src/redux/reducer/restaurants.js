@@ -1,14 +1,21 @@
 import produce from 'immer'
-import {ADD_REVIEW, FAILURE, LOAD_RESTAURANTS, REQUEST, SUCCESS} from '../constants'
-import { arrToMap } from '../utils';
+import {
+	ADD_REVIEW,
+	FAILURE,
+	LOAD_RESTAURANTS,
+	REQUEST,
+	SUCCESS,
+} from '../constants'
+import {arrToMap} from '../utils'
 
 const initialState = {
 	entities: {},
 	loading: false,
 	loaded: false,
-	error: null
+	error: null,
 }
-const restaurantsReducer = (state = initialState, action) => {
+
+const reducer = (state = initialState, action) => {
 	const {type, payload, reviewId, response, error} = action
 
 	switch (type) {
@@ -16,30 +23,29 @@ const restaurantsReducer = (state = initialState, action) => {
 			return {
 				...state,
 				loading: true,
-				error: null
-			};
+				error: null,
+			}
 		case LOAD_RESTAURANTS + SUCCESS:
 			return {
 				...state,
 				entities: arrToMap(response),
 				loading: false,
-				loaded: true
-			};
+				loaded: true,
+			}
 		case LOAD_RESTAURANTS + FAILURE:
 			return {
 				...state,
 				loading: false,
 				loaded: false,
-				error
-			};
+				error,
+			}
 		case ADD_REVIEW:
-			// Используется immer без мутирования данных
-			return  produce(state, draft => {
+			return produce(state, (draft) => {
 				draft.entities[payload.restaurantId].reviews.push(reviewId)
-			});
+			})
 		default:
 			return state
 	}
 }
 
-export default restaurantsReducer
+export default reducer

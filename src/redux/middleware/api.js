@@ -1,19 +1,29 @@
-import {FAILURE, REQUEST, SUCCESS} from '../constants'
+import {REQUEST, SUCCESS, FAILURE} from '../constants'
 
-const api = store => next => async action => {
-	if (!action.CallAPI) return next(action);
+const createPostParams = (data) => ({
+	method: 'POST',
+	headers: {'Content-Type': 'application/json'},
+	body: JSON.stringify(data),
+})
 
-	const {CallAPI, type, ...rest} = action;
+const api = (store) => (next) => async (action) => {
+	if (!action.CallAPI) return next(action)
 
-	next({...rest, type: type + REQUEST});
+	const {CallAPI, type, postData, ...rest} = action
 
+	next({...rest, type: type + REQUEST})
 	try {
-		const response = await fetch(CallAPI).then(res => res.json());
-		next({...rest, type: type + SUCCESS, response});
-	} catch (error) {
-		next({...rest, type: type + FAILURE, error});
-	}
+		const params = postData ? createPostParams(postData) : {}
 
+		const response = await fetch(CallAPI, params).then(async (res) => {
+			const data = await res.json()
+			if (res.ok) return data
+			throw data
+		})
+		return next({...rest, type: type + SUCCESS, response})
+	} catch (error) {
+		throw next({...rest, type: type + FAILURE, error})
+	}
 }
 
 export default api

@@ -1,24 +1,21 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {createStructuredSelector} from 'reselect'
 import PropTypes from 'prop-types'
-import { createStructuredSelector } from 'reselect'
 import Restaurant from '../restaurant'
-import {restaurantsListSelector} from '../../redux/selectors'
-import styles from './restaurants.module.css'
-import {loadRestaurants} from '../../redux/actionCreators/actions'
 import Tabs from '../tabs'
 
-function Restaurants(props) {
-	const {restaurants, match} = props
+import {restaurantsListSelector} from '../../redux/selectors'
 
+const Restaurants = ({restaurants, match}) => {
 	const {restId} = match.params
 
-	const restaurant = restaurants.find(restaurant => restaurant.id === restId)
+	const restaurant = restaurants.find((restaurant) => restaurant.id === restId)
 
-	const tabs = restaurants.map(({ id, name }) => ({
+	const tabs = restaurants.map(({id, name}) => ({
 		title: name,
 		to: `/restaurants/${id}`,
-	}));
+	}))
 
 	return (
 		<>
@@ -26,21 +23,18 @@ function Restaurants(props) {
 			{restaurant && <Restaurant {...restaurant} />}
 		</>
 	)
-
 }
 
 Restaurants.propTypes = {
 	restaurants: PropTypes.arrayOf(
 		PropTypes.shape({
-			name: PropTypes.string.isRequired,
-			restaurant: PropTypes.object,
+			id: PropTypes.string.isRequired,
 		}).isRequired
 	).isRequired,
 }
 
-
-export default connect(  createStructuredSelector({
+export default connect(
+	createStructuredSelector({
 		restaurants: restaurantsListSelector,
-	}),
-	{loadRestaurants}
-	)(Restaurants)
+	})
+)(Restaurants)

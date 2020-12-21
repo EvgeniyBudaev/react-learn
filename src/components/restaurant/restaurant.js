@@ -1,8 +1,9 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import {Switch, Route, Redirect} from 'react-router-dom'
+import {connect} from 'react-redux'
+import {Route, Redirect, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { createStructuredSelector } from 'reselect'
+import {createStructuredSelector} from 'reselect'
+
 import Menu from '../menu'
 import Reviews from '../reviews'
 import Banner from '../banner'
@@ -10,13 +11,11 @@ import Rate from '../rate'
 import Tabs from '../tabs'
 import {averageRatingSelector} from '../../redux/selectors'
 
-const Restaurant = (props) => {
-	const {id, name, menu, reviews, averageRating} = props
-
+const Restaurant = ({id, name, menu, reviews, averageRating}) => {
 	const tabs = [
-		{ title: 'Menu', to: `/restaurants/${id}/menu` },
-		{ title: 'Reviews', to: `/restaurants/${id}/reviews` },
-	];
+		{title: 'Menu', to: `/restaurants/${id}/menu`},
+		{title: 'Reviews', to: `/restaurants/${id}/reviews`},
+	]
 
 	return (
 		<div>
@@ -55,4 +54,4 @@ export default connect(
 	createStructuredSelector({
 		averageRating: averageRatingSelector,
 	})
-)(Restaurant);
+)(Restaurant)

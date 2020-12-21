@@ -1,8 +1,6 @@
 import React from 'react'
-import Enzyme, {mount} from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-Enzyme.configure({adapter: new Adapter()})
 import {restaurants} from '../../../fixtures'
+import {mount} from 'enzyme'
 import Review from './review'
 
 const review = restaurants[0].reviews[1]
@@ -12,9 +10,9 @@ describe('Review', () => {
 
 	beforeEach(() => {
 		component = mount(<Review {...review} />)
-		name = component.find('[data-test="review-user"]').text()
-		text = component.find('[data-test="review-text"]').text()
-		rate = component.find('[data-test="full-star"]').length
+		name = component.find('[data-id="review-user"]').text()
+		text = component.find('[data-id="review-text"]').text()
+		rate = component.find('[data-id="full-star"]').length
 	})
 
 	it('should render review', () => {
@@ -39,7 +37,7 @@ describe('Anonymous Review', () => {
 
 	beforeEach(() => {
 		component = mount(<Review text={review.text} rating={review.rating} />)
-		name = component.find('[data-test="review-user"]').text()
+		name = component.find('[data-id="review-user"]').text()
 	})
 
 	it('should render anonymous name', () => {

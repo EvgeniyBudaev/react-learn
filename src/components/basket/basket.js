@@ -1,21 +1,35 @@
-import React, {useContext} from 'react'
+import React from 'react'
 import {connect} from 'react-redux'
-import { createStructuredSelector } from 'reselect'
 import {Link} from 'react-router-dom'
+import {createStructuredSelector} from 'reselect'
+import {CSSTransition, TransitionGroup} from 'react-transition-group'
 
 import styles from './basket.module.css'
 import './basket.css'
+
 import BasketRow from './basket-row'
 import BasketItem from './basket-item'
-import Button from '../UI/button'
-import {orderProductsSelector, totalSelector} from '../../redux/selectors'
-import userContext, {UserConsumer} from '../../contexts/user-context'
-import TransitionGroup from 'react-transition-group'
-import CSSTransition from 'react-transition-group'
+import Button from '../button'
+import Loader from '../loader'
+import {
+	orderProductsSelector,
+	totalSelector,
+	checkoutMatchPageSelector,
+	orderLoadingSelector,
+} from '../../redux/selectors'
+import {makeOrder} from '../../redux/actions'
+import {UserConsumer} from '../../contexts/user-context'
+import {useMoney} from '../../hooks/use-money'
 
-function Basket({title = 'Basket', total, orderProducts}) {
-	// const {name} = useContext(userContext)
-
+function Basket({
+	title = 'Basket',
+	total,
+	orderProducts,
+	checkoutMatch,
+	makeOrder,
+	loading,
+}) {
+	const m = useMoney()
 	if (!total) {
 		return (
 			<div className={styles.basket}>
@@ -26,15 +40,21 @@ function Basket({title = 'Basket', total, orderProducts}) {
 
 	return (
 		<div className={styles.basket}>
-			{/*<h4 className={styles.title}>{`${name}'s ${title}`}</h4>*/}
+			{loading && (
+				<div className={styles.loading}>
+					<Loader />
+				</div>
+			)}
 			<h4 className={styles.title}>
-				<UserConsumer>
-					{({name}) => `${name}'s ${title}`}
-				</UserConsumer>
+				<UserConsumer>{({name}) => `${name}'s ${title}`}</UserConsumer>
 			</h4>
 			<TransitionGroup>
-				{orderProducts.map(({ product, amount, subtotal, restaurantId }) => (
-					<CSSTransition key={product.id} timeout={5000} classNames="basket-animation">
+				{orderProducts.map(({product, amount, subtotal, restaurantId}) => (
+					<CSSTransition
+						key={product.id}
+						timeout={500}
+						classNames="basket-animation"
+					>
 						<BasketItem
 							product={product}
 							amount={amount}
@@ -45,14 +65,20 @@ function Basket({title = 'Basket', total, orderProducts}) {
 				))}
 			</TransitionGroup>
 			<hr className={styles.hr} />
-			<BasketRow label="Sub-total" content={`${total} $`} />
+			<BasketRow label="Sub-total" content={m(total)} />
 			<BasketRow label="Delivery costs:" content="FREE" />
-			<BasketRow label="total" content={`${total} $`} bold />
-			<Link to="/checkout">
-				<Button primary block>
-					checkout
+			<BasketRow label="total" content={m(total)} bold />
+			{checkoutMatch ? (
+				<Button primary block onClick={makeOrder}>
+					make order
 				</Button>
-			</Link>
+			) : (
+				<Link to="/checkout">
+					<Button primary block>
+						go to checkout
+					</Button>
+				</Link>
+			)}
 		</div>
 	)
 }
@@ -60,9 +86,8 @@ function Basket({title = 'Basket', total, orderProducts}) {
 const mapStateToProps = createStructuredSelector({
 	total: totalSelector,
 	orderProducts: orderProductsSelector,
-});
+	checkoutMatch: checkoutMatchPageSelector,
+	loading: orderLoadingSelector,
+})
 
-export default connect(mapStateToProps)(Basket);
-
-// selector это функция, которая достает какие-то данные со store и меняет эти данные или не меняет. Все эти вычисления
-// необходимо мемоизировать с помощью библиотеки reselect. Reselect - общепринятый стандарт в redux.
+export default connect(mapStateToProps, {makeOrder})(Basket)

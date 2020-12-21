@@ -1,23 +1,23 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import useForm from '../../../hooks/use-form';
+import React from 'react'
+import PropTypes from 'prop-types'
+import useForm from '../../../hooks/use-form'
 
-import Rate from '../../rate';
-import styles from './review-form.module.css';
-import { connect } from 'react-redux';
-import Button from '../../UI/button';
-import { addReview } from '../../../redux/actionCreators/actions';
+import Rate from '../../rate'
+import styles from './review-form.module.css'
+import {connect} from 'react-redux'
+import Button from '../../button'
+import {addReview} from '../../../redux/actions'
 
-const INITIAL_VALUES = { name: '', text: '', rating: 5 };
+const INITIAL_VALUES = {name: '', text: '', rating: 5}
 
-const ReviewForm = ({ onSubmit }) => {
-	const { values, handlers, reset } = useForm(INITIAL_VALUES);
+const ReviewForm = ({onSubmit}) => {
+	const {values, handlers, reset} = useForm(INITIAL_VALUES)
 
 	const handleSubmit = (ev) => {
-		ev.preventDefault();
-		onSubmit(values);
-		reset();
-	};
+		ev.preventDefault()
+		onSubmit(values)
+		reset()
+	}
 
 	return (
 		<div className={styles.reviewForm}>
@@ -31,7 +31,7 @@ const ReviewForm = ({ onSubmit }) => {
 					/>
 				</div>
 				<div className={styles.reviewFormItem}>
-          <textarea
+					<textarea
 						placeholder="Your review"
 						className={styles.message}
 						{...handlers.text}
@@ -40,8 +40,8 @@ const ReviewForm = ({ onSubmit }) => {
 				<div className={styles.rateWrap}>
 					<span>Rating: </span>
 					<span>
-            <Rate {...handlers.rating} />
-          </span>
+						<Rate {...handlers.rating} />
+					</span>
 				</div>
 				<div className={styles.publish}>
 					<Button primary block>
@@ -50,14 +50,14 @@ const ReviewForm = ({ onSubmit }) => {
 				</div>
 			</form>
 		</div>
-	);
-};
+	)
+}
 
 ReviewForm.propTypes = {
 	restaurantId: PropTypes.string,
 	onSubmit: PropTypes.func.isRequired,
-};
+}
 
 export default connect(null, (dispatch, props) => ({
 	onSubmit: (review) => dispatch(addReview(review, props.restaurantId)),
-}))(ReviewForm);
+}))(ReviewForm)

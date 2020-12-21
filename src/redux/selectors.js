@@ -1,50 +1,47 @@
 import {createSelector} from 'reselect'
-import { getById } from './utils';
+import {createMatchSelector} from 'connected-react-router'
+import {getById} from './utils'
 
 const restaurantsSelector = (state) => state.restaurants.entities
-const productsSelector = (state) => state.products.entities;
-const reviewsSelector = (state) => state.reviews.entities;
-const usersSelector = (state) => state.users.entities;
-const orderSelector = (state) => state.order
+const productsSelector = (state) => state.products.entities
+const reviewsSelector = (state) => state.reviews.entities
+const usersSelector = (state) => state.users.entities
 
+const orderSelector = (state) => state.order.entities
+
+export const orderLoadingSelector = (state) => state.order.loading
+export const orderErrorSelector = (state) => state.order.error
 
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded
 
 export const productsLoadingSelector = (state, props) =>
-	state.products.loading[props.restaurantId];
+	state.products.loading[props.restaurantId]
 export const productsLoadedSelector = (state, props) =>
-	state.products.loaded[props.restaurantId];
+	state.products.loaded[props.restaurantId]
 
 export const reviewsLoadingSelector = (state, props) =>
-	state.reviews.loading[props.restaurantId];
+	state.reviews.loading[props.restaurantId]
 export const reviewsLoadedSelector = (state, props) =>
-	state.reviews.loaded[props.restaurantId];
+	state.reviews.loaded[props.restaurantId]
 
-
-export const usersLoadingSelector = (state) => state.users.loading;
-export const usersLoadedSelector = (state) => state.users.loaded;
-
+export const usersLoadingSelector = (state) => state.users.loading
+export const usersLoadedSelector = (state) => state.users.loaded
 
 export const restaurantsListSelector = createSelector(
 	restaurantsSelector,
 	Object.values
-);
+)
 
 const restaurantsIdsByProductsSelector = createSelector(
 	restaurantsListSelector,
 	(restaurants) =>
 		restaurants
 			.flatMap((rest) =>
-				rest.menu.map((productId) => ({ productId, restId: rest.id }))
+				rest.menu.map((productId) => ({productId, restId: rest.id}))
 			)
-			.reduce(
-				(acc, { productId, restId }) => ({ ...acc, [productId]: restId }),
-				{}
-			)
-);
-
-
+			.reduce((acc, {productId, restId}) => ({...acc, [productId]: restId}), {})
+)
 
 export const orderProductsSelector = createSelector(
 	productsSelector,
@@ -61,13 +58,17 @@ export const orderProductsSelector = createSelector(
 				restaurantId: restaurantsIds[product.id],
 			}))
 	}
-);
+)
 
+export const totalSelector = createSelector(
+	orderProductsSelector,
+	(orderProducts) =>
+		orderProducts.reduce((acc, {subtotal}) => acc + subtotal, 0)
+)
 
-
-export const productAmountSelector = getById(orderSelector, 0);
-export const productSelector = getById(productsSelector);
-const reviewSelector = getById(reviewsSelector);
+export const productAmountSelector = getById(orderSelector, 0)
+export const productSelector = getById(productsSelector)
+const reviewSelector = getById(reviewsSelector)
 
 export const reviewWitUserSelector = createSelector(
 	reviewSelector,
@@ -76,21 +77,21 @@ export const reviewWitUserSelector = createSelector(
 		...review,
 		user: users[review.userId]?.name,
 	})
-);
+)
 
 export const averageRatingSelector = createSelector(
 	reviewsSelector,
-	(_, { reviews }) => reviews,
+	(_, {reviews}) => reviews,
 	(reviews, ids) => {
-		const ratings = ids.map((id) => reviews[id]?.rating || 0);
+		const ratings = ids.map((id) => reviews[id]?.rating || 0)
 		return Math.round(
 			ratings.reduce((acc, rating) => acc + rating) / ratings.length
-		);
+		)
 	}
-);
+)
 
-export const totalSelector = createSelector(
-	orderProductsSelector,
-	(orderProducts) =>
-		orderProducts.reduce((acc, {subtotal}) => acc + subtotal, 0)
+export const checkoutMatchPageSelector = createMatchSelector('/checkout')
+
+export const orderDataSelector = createSelector(orderSelector, (order) =>
+	Object.entries(order).map(([id, amount]) => ({id, amount}))
 )
