@@ -11,13 +11,13 @@ import Tabs from '../tabs'
 function Restaurants(props) {
 	const {restaurants, match} = props
 
-	const { restId, tabId = 'menu' } = match.params
+	const {restId} = match.params
 
 	const restaurant = restaurants.find(restaurant => restaurant.id === restId)
 
 	const tabs = restaurants.map(({ id, name }) => ({
 		title: name,
-		to: `/restaurants/${id}/${tabId}`,
+		to: `/restaurants/${id}`,
 	}));
 
 	return (
